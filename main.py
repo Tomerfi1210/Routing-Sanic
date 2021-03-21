@@ -3,9 +3,11 @@ import sanic.response
 import aiohttp
 import parsel
 import json
-from Utill import Database
+from database import Database
 
 app = Sanic(__name__)
+
+database = None
 
 
 @app.route('/<page>', methods=['GET'])
@@ -29,14 +31,10 @@ async def fetch(url):
             return response_object
 
 
-def create_database():
-    global database
-
-
 if __name__ == '__main__':
-    create_database()
     try:
         database = Database('database.ini')
-        app.run(host='0.0.0.0', port=8000)
+        if database:
+            app.run(host='0.0.0.0', port=8000)
     except ValueError as e:
         print(e)
