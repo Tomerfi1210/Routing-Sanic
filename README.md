@@ -12,8 +12,6 @@ Dependencies and Installations:
   - To start the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" start**
   - To stop the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" stop**
 * have python installed
-* open the command line and run "python -m venv [your_project/venv]"
-* run **your_project/venv/Scripts/activate.bat** in order to activate the venv
 * run "pip install -r requirements.txt" to install python dependencies
 * To run the script run "python main.py"
 * now you can send requests to the api. if you are running on localhost then an example is:
