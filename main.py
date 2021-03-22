@@ -1,4 +1,6 @@
 from sanic import Sanic
+from sanic import exceptions
+from sanic.exceptions import abort
 import sanic.response
 import aiohttp
 import parsel
@@ -12,9 +14,14 @@ database = None
 
 @app.route('/<page>', methods=['GET'])
 async def test(request, page):
-    response = await fetch(f'https://en.wikipedia.org/wiki/{page}')
-    database.insert_data(response)
-    return sanic.response.json(response)
+    if not page or page == "":
+        abort(404)
+    try:
+        response = await fetch(f'https://en.wikipedia.org/wiki/{page}')
+        database.insert_data(response)
+        return sanic.response.json({"response": "entry added to db"})
+    except:
+        raise sanic.exceptions.SanicException("error in server")
 
 
 async def fetch(url):
