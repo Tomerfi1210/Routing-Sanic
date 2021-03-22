@@ -1,18 +1,19 @@
 # TCM-TEST
-Python test
+Dependencies and Installations:
 
-The goal of this exercise is to create an API webserver that can scrape the Wikipedia site.
-This webserver must be coded in Python. It should be created with the Python Sanic library. 
-It will have only one route allowing to call the scraping. The only input parameter will be the page to scrape.
-Example of parameter: page = New_Zealand
-The scraped page will be: https://en.wikipedia.org/wiki/New_Zealand
-	“https://en.wikipedia.org/wiki/” is a fixed part.
+* Clone this repository
 
-The objective of this exercise is to retrieve the value of the RLCONF variable from the source page. This variable is a JSON, and from it, you need to store the value of the following labels in a PostgreSQL database:
-  - wgRequestId
-  - wgCategories
-  - wgPageContentLanguage
-  - wgRelevantPageName
+* Must have postgresql installed on local machine or a remote to connect to. 
+  The defualt host is localhost and port is 5432. 
+  To use postgresdb on localhost, please install postgresql and run the service on your local machine. 
+  For information on installing and running postgresql refer to: https://www.postgresqltutorial.com/install-postgresql/
 
-In order to retrieve the source page data, you can use the Python aiohttp library.
-To analyze the data of the page you can use the Selector and xpath methods of the parsel library.
+* In order to start/stop the server you must find the location of your PostgreSQL database directory it can be like: C:\Program Files\PostgreSQL\data
+  - To start the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" start**
+  - To stop the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" stop**
+
+* To run the script run "python main.py"
+* now you can send requests to the api. if you are running on localhost then an example is:
+  http://localhost:8000/Tel_Aviv 
+
+* in order to see resuls you can view the DB 
