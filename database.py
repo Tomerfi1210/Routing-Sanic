@@ -13,6 +13,7 @@ class Database:
 
     def __del__(self):
         self.__connection.close() # close the connection
+
     def __db_exists(self, db_name):
         cur = self.__connection.cursor()
         cur.execute("SELECT datname FROM pg_database")
@@ -35,33 +36,46 @@ class Database:
 
         try:
             # read values from a section
-            # conect to defualt db
+            # connect to default db
             self.__connection = psycopg2.connect(user=config.get('postgresql', 'user'),
                                           password=config.get('postgresql', "password"),
                                           host=config.get('postgresql', "host"),
                                           port=config.get('postgresql', "port"))
+
             self.__connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
+            # if database didnt exist - create it
             if not self.__db_exists(config.get('postgresql', 'database')):
                 self.__create_db(config.get('postgresql', 'database'))
             self.__connection.close()
-            self.__connection = psycopg2.connect(user=config.get('postgresql', 'user'),
-                                         password=config.get('postgresql', "password"),
-                                         host=config.get('postgresql', "host"),
-                                         port=config.get('postgresql', "port"),
-                                         database=config.get('postgresql', 'database'))
+
+            self.__set_connection(config)
 
         except Exception as e:
             print(e)
-            return None
+
+    def __set_connection(self, config):
+        self.__connection = psycopg2.connect(user=config.get('postgresql', 'user'),
+                                             password=config.get('postgresql', "password"),
+                                             host=config.get('postgresql', "host"),
+                                             port=config.get('postgresql', "port"),
+                                             database=config.get('postgresql', 'database'))
 
     def __create_db(self, db_name):
+        """
+        This function create the wanted db with given name.
+        :param db_name: The database name the we want to create
+        :return: None
+        """
         curs = self.__connection.cursor()
         # command =  + db_name+";"
         curs.execute(sql.SQL("CREATE DATABASE {}".format(db_name)))
 
 
     def __create_table(self):
-        """function that create table in database"""
+        """
+        function that create table in database
+        """
         curs = self.__connection.cursor()
         curs.execute('''CREATE TABLE IF NOT EXISTS WikiEntries
               (wgRequestId TEXT PRIMARY KEY NOT NULL,
