@@ -8,6 +8,14 @@ Dependencies and Installations:
   To use postgres on localhost, please install postgresql and run the service on your local machine. 
   For information on installing and running postgresql refer to: https://www.postgresqltutorial.com/install-postgresql/
 
+* The .ini file store the data to connect to the database. It contains: 
+  host - default localhost
+  database - the name of the db(default postgres)
+  user - the name of the user
+  password - the password
+  port - the port of the database(default 5432)
+
+
 * In order to start/stop the server you must find the location of your PostgreSQL database directory it can be like: C:\Program Files\PostgreSQL\data
   - To start the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" start**
   - To stop the server you need to open the command line and execute: **pg_ctl -D "C:\Program Files\PostgreSQL\data" stop**
